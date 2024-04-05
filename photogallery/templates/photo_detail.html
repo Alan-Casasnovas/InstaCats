@@ -1,0 +1,40 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}
+ Instacat Details
+{% endblock %}
+{% block content%}
+<head>
+    <title>Photo Details</title>
+</head>
+<body>
+    <h1>Photo Details</h1>
+    <p><img src="{{ photo.image.url }}" alt="{{ photo.description }}"></p>
+    <p>Description: {{ photo.description }}</p>
+</body>
+
+{% if request.user == photo.user %}
+<form method="post" action="{% url 'delete_photo' photo.pk %}">
+    {% csrf_token %}
+    <button type="submit">Delete Photo</button>
+</form>
+    {% endif %}
+
+<h2>Comments</h2>
+<ul>
+    {% for comment in comments %}
+    <li>{{ comment.user.username }} - {{ comment.text }}</li>
+    {% endfor %}
+</ul>
+
+    {% if user.is_authenticated %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post Comment</button>
+</form>
+    {% else %}
+<p>Please <a href="{% url 'login' %}">login</a> to post comments.</p>
+    {% endif %}
+
+{% endblock %}

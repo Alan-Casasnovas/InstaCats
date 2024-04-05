@@ -1,0 +1,23 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}
+ Instacat Photo_List
+{% endblock %}
+{% block content%}
+<head>
+    <title>Instacat</title>
+</head>
+<body>
+    <h1>Photo List</h1>
+    <ul>
+        {% for photo in photos %}
+        <a href="{% url 'photo_detail' photo.pk %}"><img src={{ photo.image.url }} style="width:420px;height:420px;"></a></li>
+        {% endfor %}
+    </ul>
+    {% if user.is_authenticated %}
+        <a href="{% url 'add_photo' %}">Post your photos here !</a>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">login</a> to post photos.</p>
+    {% endif %}
+</body>
+{% endblock %}

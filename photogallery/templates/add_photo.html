@@ -1,0 +1,17 @@
+{% extends "home.html" %}
+{% block title %}
+ Instacat Add Photo
+{% endblock %}
+{% block content%}
+<head>
+    <title>Post your photo</title>
+</head>
+<body>
+    <h1>Add photo</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+</body>
+{% endblock %}
