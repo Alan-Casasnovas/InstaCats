@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from .models import Photo, Comment
 from .forms import SignupForm, LoginForm, PhotoForm, CommentForm
 
@@ -42,6 +43,9 @@ def user_logout(request):
 
 def photo_list(request):
     photos = Photo.objects.all()
+    hashtag = request.GET.get("hashtag")
+    if hashtag:
+        photos = photos.filter(Q(description__icontains=f"#{hashtag}"))
     return render(request, "photo_list.html", {"photos": photos})
 
 

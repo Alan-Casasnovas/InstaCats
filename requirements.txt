@@ -1,1 +1,3 @@
-pip install pre commit
+django
+pillow
+gunicorn
