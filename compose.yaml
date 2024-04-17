@@ -17,9 +17,22 @@ services:
     volumes:
       - .:/varnaWeb:rw
       - C:/Users/alanc/OneDrive/Desktop/ESILV/Python/mysite/varnaWeb/db.sqlite3:/varnaWeb/db.sqlite3
+    depends_on:
+      - db
     stdin_open: true
     tty: true
 
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: dbname
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+
+volumes:
+  postgres_data:
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
